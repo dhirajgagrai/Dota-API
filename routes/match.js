@@ -7,7 +7,7 @@ matchRouter.route('/:matchid')
     .get((req, res) => {
         //RegExp for string containing only digits
         if (/^\d+$/.test(req.params.matchid) && req.params.matchid != '0') {
-            fetch('http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=' + process.env.API_KEY + '&match_id=' + req.params.matchid)
+            fetch(`http://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1?key=${process.env.API_KEY}&match_id=${req.params.matchid}`)
                 .then((fetchResponse) => fetchResponse.json())
                 .then((matchData) => {
                     res.statusCode = 200;
