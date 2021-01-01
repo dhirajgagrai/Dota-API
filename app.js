@@ -1,6 +1,6 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -9,11 +9,15 @@ const matchRouter = require('./routes/match.js');
 
 require('dotenv').config();
 
+const methodNotAllowed = (req, res) => res.status(400).send();
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userRouter);
 
 app.use('/match', matchRouter);
+
+app.use('*', methodNotAllowed);
 
 app.listen(3000, (err) => {
     if (err) throw err;

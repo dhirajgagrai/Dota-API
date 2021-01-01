@@ -50,10 +50,18 @@ const abandon = function (left) {
         return "No";
 }
 
-const heroDetail = function (id) {
+const heroName = function (id) {
     for (hero of heroData.heroes)
         if (hero.id == id)
             return hero.localized_name;
+}
+
+const heroImage = function (id) {
+    for (hero of heroData.heroes)
+        if (hero.id == id) {
+            var name = hero.name.replace('npc_dota_hero_', '');
+            return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_sb.png`);
+        }
 }
 
 const duration = function (time) {
@@ -69,6 +77,7 @@ module.exports = {
     won,
     result,
     abandon,
-    heroDetail,
+    heroName,
+    heroImage,
     duration
 };

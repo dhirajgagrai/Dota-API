@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 const userRouter = express.Router();
 
-const matchDetail = require('../src/match-details.js');
+const details = require('../src/details.js');
 const url = require('../src/url.js')
 
 const methodNotAllowed = (req, res) => res.status(405).send();
@@ -40,17 +40,18 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                             .then((matchData) => {
                                 userMatchData = (matchData.result.players.find(player => player.account_id == req.params.userid));
                                 var matchid = matchData.result.match_id;
-                                var mode = matchDetail.gameMode(matchData.result.game_mode);
-                                var lobby = matchDetail.lobbyType(matchData.result.lobby_type);
-                                var faction = matchDetail.faction(userMatchData.player_slot);
-                                var won = matchDetail.won(matchData.result.radiant_win);
-                                var result = matchDetail.result(faction, won);
-                                var abandon = matchDetail.abandon(userMatchData.leaver_status);
-                                var hero = matchDetail.heroDetail(userMatchData.hero_id);
+                                var mode = details.gameMode(matchData.result.game_mode);
+                                var lobby = details.lobbyType(matchData.result.lobby_type);
+                                var faction = details.faction(userMatchData.player_slot);
+                                var won = details.won(matchData.result.radiant_win);
+                                var result = details.result(faction, won);
+                                var abandon = details.abandon(userMatchData.leaver_status);
+                                var hero = details.heroName(userMatchData.hero_id);
+                                var portrait = details.heroImage(userMatchData.hero_id);
                                 var kills = userMatchData.kills;
                                 var deaths = userMatchData.deaths;
                                 var assists = userMatchData.assists;
-                                var duration = matchDetail.duration(matchData.result.duration);
+                                var duration = details.duration(matchData.result.duration);
                                 var match_data = {
                                     "matchid": matchid,
                                     "mode": mode,
@@ -58,7 +59,10 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                                     "faction": faction,
                                     "result": result,
                                     "abandon": abandon,
-                                    "hero": hero,
+                                    "hero": {
+                                        "name": hero,
+                                        "portrait": portrait
+                                    },
                                     "kills": kills,
                                     "deaths": deaths,
                                     "assists": assists,
