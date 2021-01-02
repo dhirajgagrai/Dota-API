@@ -148,6 +148,7 @@ matchRouter.route('/:matchid')
                         "dire_tower": dTower,
                         "dire_barracks": dBarracks
                     }
+                    
                     res.statusCode = 200;
                     res.json(data);
                 });

@@ -22,6 +22,9 @@ const lobbyType = function (lobbyNo) {
 }
 
 const faction = function (slot) {
+    // A player's slot is returned via an 8-bit unsigned integer.
+    // The first bit represent the player's team, false if Radiant and true if dire.
+
     bin = ("00000000" + slot.toString(2)).slice(-8);
     factionValue = bin.slice(0, 1);
     if (factionValue == 0)
@@ -31,9 +34,11 @@ const faction = function (slot) {
 }
 
 const slot = function (slot) {
+    // The final three bits represent the player's position in that team, from 0-4.
+
     bin = ("000" + slot.toString(2)).slice(-3);
     slotValue = parseInt(bin, 2);
-    return(slotValue);
+    return (slotValue);
 }
 
 const won = function (radiantWin) {
@@ -51,6 +56,16 @@ const result = function (faction, won) {
 }
 
 const abandon = function (left) {
+    /*
+    0 - NONE - finished match, no abandon.
+    1 - DISCONNECTED - player DC, no abandon.
+    2 - DISCONNECTED_TOO_LONG - player DC > 5min, abandoned.
+    3 - ABANDONED - player DC, clicked leave, abandoned.
+    4 - AFK - player AFK, abandoned.
+    5 - NEVER_CONNECTED - player never connected, no abandon.
+    6 - NEVER_CONNECTED_TOO_LONG - player took too long to connect, no abandon.
+    */
+
     if (left)
         return 1;
     else
@@ -112,6 +127,9 @@ const duration = function (time) {
 }
 
 const tower = function (status) {
+    // A particular teams tower status is given as a 16-bit unsigned integer.
+    // The rightmost 11 bits represent individual towers belonging to that team.
+
     bin = ("00000000000" + status.toString(2)).slice(-11);
     return {
         "Ancient Bottom": bin.slice(0, 1),
@@ -129,6 +147,9 @@ const tower = function (status) {
 }
 
 const barracks = function (status) {
+    // A particular teams tower status is given as an 8-bit unsigned integer.
+    // The rightmost 6 bits represent the barracks belonging to that team.
+
     bin = ("000000" + status.toString(2)).slice(-6);
     return {
         "Bottom Ranged": bin.slice(0, 1),
