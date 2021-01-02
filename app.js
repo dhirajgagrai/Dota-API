@@ -11,8 +11,6 @@ require('dotenv').config();
 
 const methodNotAllowed = (req, res) => res.status(400).send();
 
-app.use(express.urlencoded({ extended: true }));
-
 app.use('/user', userRouter);
 
 app.use('/match', matchRouter);
