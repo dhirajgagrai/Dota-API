@@ -1,4 +1,5 @@
 const heroData = require('../json/dotaHeroes.json');
+const itemData = require('../json/dotaItems.json');
 
 const gameMode = function (modeNo) {
     var mode = ["None", "All Pick", "Captain's Mode", "Random Draft", "Single Draft",
@@ -29,6 +30,12 @@ const faction = function (slot) {
         return "Dire";
 }
 
+const slot = function (slot) {
+    bin = ("000" + slot.toString(2)).slice(-3);
+    slotValue = parseInt(bin, 2);
+    return(slotValue);
+}
+
 const won = function (radiantWin) {
     if (radiantWin)
         return "Radiant";
@@ -45,9 +52,9 @@ const result = function (faction, won) {
 
 const abandon = function (left) {
     if (left)
-        return "Yes";
+        return 1;
     else
-        return "No";
+        return 0;
 }
 
 const heroName = function (id) {
@@ -56,11 +63,45 @@ const heroName = function (id) {
             return hero.localized_name;
 }
 
-const heroImage = function (id) {
+const heroImage = function (id, size) {
     for (hero of heroData.heroes)
         if (hero.id == id) {
             var name = hero.name.replace('npc_dota_hero_', '');
-            return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_sb.png`);
+            switch (size) {
+                case 'tiny':
+                    return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_eb.png`);
+                    break;
+                case 'small':
+                    return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_sb.png`);
+                    break;
+                case 'large':
+                    return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_lg.png`);
+                    break;
+                case 'full':
+                    return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_full.png`);
+                    break;
+                case 'vert':
+                    return (`http://cdn.dota2.com/apps/dota2/images/heroes/${name}_vert.jpg`);
+                    break;
+            }
+        }
+}
+
+const itemName = function (id) {
+    if (id == 0)
+        return (0);
+    for (item of itemData.items)
+        if (item.id == id)
+            return item.localized_name;
+}
+
+const itemImage = function (id) {
+    if (id == 0)
+        return (0);
+    for (item of itemData.items)
+        if (item.id == id) {
+            var name = item.name.replace('item_', '');
+            return (`http://cdn.dota2.com/apps/dota2/images/items/${name}_lg.png`);
         }
 }
 
@@ -70,14 +111,48 @@ const duration = function (time) {
     return (minutes + ":" + ("00" + seconds).slice(-2));
 }
 
+const tower = function (status) {
+    bin = ("00000000000" + status.toString(2)).slice(-11);
+    return {
+        "Ancient Bottom": bin.slice(0, 1),
+        "Ancient Top": bin.slice(1, 2),
+        "Bottom Tier 3": bin.slice(2, 3),
+        "Bottom Tier 2": bin.slice(3, 4),
+        "Bottom Tier 1": bin.slice(4, 5),
+        "Middle Tier 3": bin.slice(5, 6),
+        "Middle Tier 2": bin.slice(6, 7),
+        "Middle Tier 1": bin.slice(7, 8),
+        "Top Tier 3": bin.slice(8, 9),
+        "Top Tier 2": bin.slice(9, 10),
+        "Top Tier 1": bin.slice(10, 11)
+    }
+}
+
+const barracks = function (status) {
+    bin = ("000000" + status.toString(2)).slice(-6);
+    return {
+        "Bottom Ranged": bin.slice(0, 1),
+        "Bottom Melee": bin.slice(1, 2),
+        "Middle Ranged": bin.slice(2, 3),
+        "Middle Melee": bin.slice(3, 4),
+        "Top Ranged": bin.slice(4, 5),
+        "Top Melee": bin.slice(5, 6)
+    }
+}
+
 module.exports = {
     gameMode,
     lobbyType,
     faction,
+    slot,
     won,
     result,
     abandon,
     heroName,
     heroImage,
-    duration
+    itemName,
+    itemImage,
+    duration,
+    tower,
+    barracks
 };

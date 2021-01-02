@@ -47,7 +47,9 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                                 var result = details.result(faction, won);
                                 var abandon = details.abandon(userMatchData.leaver_status);
                                 var hero = details.heroName(userMatchData.hero_id);
-                                var portrait = details.heroImage(userMatchData.hero_id);
+                                var small_portrait = details.heroImage(userMatchData.hero_id, 'small');
+                                var full_portrait = details.heroImage(userMatchData.hero_id, 'full');
+                                var vert_portrait = details.heroImage(userMatchData.hero_id, 'vert');
                                 var kills = userMatchData.kills;
                                 var deaths = userMatchData.deaths;
                                 var assists = userMatchData.assists;
@@ -61,7 +63,9 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                                     "abandon": abandon,
                                     "hero": {
                                         "name": hero,
-                                        "portrait": portrait
+                                        "small_portrait": small_portrait,
+                                        "full_portrait": full_portrait,
+                                        "vertical_portrait": vert_portrait
                                     },
                                     "kills": kills,
                                     "deaths": deaths,
@@ -74,7 +78,7 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                     });
                     Promise.all(promises).then((data) => {
                         res.statusCode = 200;
-                        res.json(data)
+                        res.json(data);
                     });
                 })
         }
