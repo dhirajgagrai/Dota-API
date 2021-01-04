@@ -15,7 +15,7 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
             matchn = req.params.matchn;
         else {
             res.statusCode = 400;
-            res.end('Request should be of format /:USER_ID or /:USER_ID/:NO_OF_MATCHES');
+            res.end('Invalid Request. Format should be /:USER_ID or /:USER_ID/:NO_OF_MATCHES');
         }
 
         //RegExp for string containing only digits
@@ -26,7 +26,7 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                     //status 15 - Cannot get match history for a user that hasn't allowed it
                     if (matchHistory.result.status === 15) {
                         res.statusCode = 204;
-                        res.end('Public Match Data not available for this USER ID');
+                        res.end('USER ID did not allow Public Match Data');
                     }
                     //status 1 - Success
                     else if (matchHistory.result.status === 1)
