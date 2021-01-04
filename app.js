@@ -9,13 +9,13 @@ const matchRouter = require('./routes/match.js');
 
 require('dotenv').config();
 
-const methodNotAllowed = (req, res) => res.status(400).send();
+const badRequest = (req, res) => res.status(400).send();
 
 app.use('/user', userRouter);
 
 app.use('/match', matchRouter);
 
-app.use('*', methodNotAllowed);
+app.use('*', badRequest);
 
 app.listen(3000, (err) => {
     if (err) throw err;
