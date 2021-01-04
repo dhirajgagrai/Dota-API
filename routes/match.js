@@ -125,6 +125,33 @@ matchRouter.route('/:matchid')
                             "gold_spent": goldSpent
                         }
                     });
+                    var picksbans = [];
+                    matchData.result.picks_bans.forEach((pb, i) => {
+                        if (pb.is_pick)
+                            var action = 'pick';
+                        else
+                            var action = 'ban';
+                        var hero = details.heroName(pb.hero_id);
+                        var small_portrait = details.heroImage(pb.hero_id, 'small');
+                        var full_portrait = details.heroImage(pb.hero_id, 'full');
+                        var vert_portrait = details.heroImage(pb.hero_id, 'vert');
+                        if (pb.team)
+                            var team = 'Dire';
+                        else
+                            var team = 'Radiant';
+                        var order = pb.order;
+                        picksbans[i] = {
+                            "action": action,
+                            "hero": {
+                                "name": hero,
+                                "small_portrait": small_portrait,
+                                "full_portrait": full_portrait,
+                                "vertical_portrait": vert_portrait
+                            },
+                            "team": team,
+                            "order": order
+                        }
+                    });
                     var mode = details.gameMode(matchData.result.game_mode);
                     var lobby = details.lobbyType(matchData.result.lobby_type);
                     var won = details.won(matchData.result.radiant_win);
@@ -146,15 +173,16 @@ matchRouter.route('/:matchid')
                         "radiant_tower": rTower,
                         "radiant_barracks": rBarracks,
                         "dire_tower": dTower,
-                        "dire_barracks": dBarracks
+                        "dire_barracks": dBarracks,
+                        "picks_bans": picksbans
                     }
-                    
+
                     res.statusCode = 200;
                     res.json(data);
                 });
         }
         else
-            res.send('You need to enter a valid match ID');
+            res.send('MATCH ID not found');
     })
     .all(methodNotAllowed);
 
