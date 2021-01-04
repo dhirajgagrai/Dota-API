@@ -1,6 +1,4 @@
 const express = require('express');
-const path = require('path');
-const fetch = require('node-fetch');
 
 const app = express();
 
@@ -17,7 +15,7 @@ app.use('/match', matchRouter);
 
 app.use('*', badRequest);
 
-app.listen(3000, (err) => {
+app.listen(9000, (err) => {
     if (err) throw err;
-    console.log('\x1b[36m%s\x1b[0m', 'Server started at http://localhost:3000');
+    console.log('\x1b[36m%s\x1b[0m', 'Server started at http://localhost:9000');
 });
