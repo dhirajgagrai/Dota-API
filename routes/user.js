@@ -39,34 +39,27 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
                             .then((fetchResponse) => fetchResponse.json())
                             .then((matchData) => {
                                 userMatchData = (matchData.result.players.find(player => player.account_id == req.params.userid));
-                                var matchid = matchData.result.match_id;
+                                var matchId = matchData.result.match_id;
                                 var mode = details.gameMode(matchData.result.game_mode);
                                 var lobby = details.lobbyType(matchData.result.lobby_type);
                                 var faction = details.faction(userMatchData.player_slot);
                                 var won = details.won(matchData.result.radiant_win);
                                 var result = details.result(faction, won);
                                 var abandon = details.abandon(userMatchData.leaver_status);
-                                var hero = details.heroName(userMatchData.hero_id);
-                                var small_portrait = details.heroImage(userMatchData.hero_id, 'small');
-                                var full_portrait = details.heroImage(userMatchData.hero_id, 'full');
-                                var vert_portrait = details.heroImage(userMatchData.hero_id, 'vert');
+                                var hero = details.heroDetail(userMatchData.hero_id);
                                 var kills = userMatchData.kills;
                                 var deaths = userMatchData.deaths;
                                 var assists = userMatchData.assists;
                                 var duration = details.duration(matchData.result.duration);
+
                                 var match_data = {
-                                    "matchid": matchid,
+                                    "matchid": matchId,
                                     "mode": mode,
                                     "lobby": lobby,
                                     "faction": faction,
                                     "result": result,
                                     "abandon": abandon,
-                                    "hero": {
-                                        "name": hero,
-                                        "small_portrait": small_portrait,
-                                        "full_portrait": full_portrait,
-                                        "vertical_portrait": vert_portrait
-                                    },
+                                    "hero": hero,
                                     "kills": kills,
                                     "deaths": deaths,
                                     "assists": assists,

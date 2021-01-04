@@ -72,10 +72,16 @@ const abandon = function (left) {
         return 0;
 }
 
-const heroName = function (id) {
+const heroDetail = function (id) {
     for (hero of heroData.heroes)
         if (hero.id == id)
-            return hero.localized_name;
+            return {
+                "id": hero.id,
+                "name": hero.localized_name,
+                "small_portrait": heroImage(hero.id, 'small'),
+                "full_portrait": heroImage(hero.id, 'full'),
+                "vertical_portrait": heroImage(hero.id, 'vert')
+            };
 }
 
 const heroImage = function (id, size) {
@@ -102,17 +108,21 @@ const heroImage = function (id, size) {
         }
 }
 
-const itemName = function (id) {
+const itemDetail = function (id) {
     if (id == 0)
-        return (0);
+        return 0;
     for (item of itemData.items)
         if (item.id == id)
-            return item.localized_name;
+            return {
+                "id": item.id,
+                "name": item.localized_name,
+                "image": itemImage(item.id)
+            };
 }
 
 const itemImage = function (id) {
     if (id == 0)
-        return (0);
+        return 0;
     for (item of itemData.items)
         if (item.id == id) {
             var name = item.name.replace('item_', '');
@@ -169,9 +179,9 @@ module.exports = {
     won,
     result,
     abandon,
-    heroName,
+    heroDetail,
     heroImage,
-    itemName,
+    itemDetail,
     itemImage,
     duration,
     tower,
