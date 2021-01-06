@@ -1,19 +1,24 @@
 const express = require('express');
-
 const app = express();
 
 const userRouter = require('./routes/user.js');
 const matchRouter = require('./routes/match.js');
 
-require('dotenv').config();
+const ApiError = require('./error/ApiError.js');
+const errorHandler = require('./error/errorHandler.js');
 
-const badRequest = (req, res) => res.status(400).send();
+require('dotenv').config();
 
 app.use('/user', userRouter);
 
 app.use('/match', matchRouter);
 
-app.use('*', badRequest);
+app.use('*', (req, res, next) => {
+    const error = ApiError.badRequest('Invalid request');
+    next(error);
+});
+
+app.use(errorHandler);
 
 app.listen(9000, (err) => {
     if (err) throw err;
