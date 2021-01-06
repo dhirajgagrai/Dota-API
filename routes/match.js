@@ -3,15 +3,15 @@ const fetch = require('node-fetch');
 
 const matchRouter = express.Router();
 
+const ApiError = require('../error/ApiError.js');
+
 const details = require('../src/details.js');
 const url = require('../src/url.js')
 
-const methodNotAllowed = (req, res) => res.status(405).send();
-
 matchRouter.route('/:matchid')
-    .get((req, res) => {
+    .get((req, res, next) => {
         if (/^\d+$/.test(req.params.matchid) && req.params.matchid != '0') {
-            fetch(`${url.matchDetails}?key=${process.env.API_KEY}&match_id=${req.params.matchid}`)
+            fetch(`${url.matchDetails}key=${process.env.API_KEY}&match_id=${req.params.matchid}`)
                 .then((fetchResponse) => fetchResponse.json())
                 .then((matchData) => {
                     var playerData = [];
@@ -121,13 +121,17 @@ matchRouter.route('/:matchid')
                         "picks_bans": picksbans
                     }
 
-                    res.statusCode = 200;
-                    res.json(data);
+                    res.status(200).json(data);
                 });
         }
-        else
-            res.send('MATCH ID not found');
+        else {
+            const error = ApiError.notFound('MATCH ID not found');
+            next(error);
+        }
     })
-    .all(methodNotAllowed);
+    .all((req, res, next) => {
+        const error = ApiError.methodNotAllowed('Operation not allowed');
+        next(error);
+    });
 
 module.exports = matchRouter;
