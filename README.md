@@ -9,8 +9,6 @@ This is used for making calls to Steam Web API.
 
 ## Getting Started
 
-Grab the dev key
-
 Create a file named '.env' and add
 
 ```
@@ -43,7 +41,7 @@ Now go to [http://localhost:9000/user/851481689/1](http://localhost:9000/user/85
 ```
 
 
-## Getting Match History
+### GET Match History
 
 ```
 GET    /user/USER_ID
@@ -53,10 +51,10 @@ GET    /user/USER_ID/NO_OF_MATCHES
 Returns a list of matches.
 If NO_OF_MATCHES is not provided, it will return last 10 matches by default.
 
-## Getting Match Details
+### GET Match Details
 
 ```
 GET    /match/MATCH_ID
 ```
 
-Returns data containing *list of players and their stats*, *match info*, *towers and barracks status* and *picks and bans*.
+Returns data containing **list of players and their stats**, **match info**, **towers and barracks status** and **picks and bans**.
