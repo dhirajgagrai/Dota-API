@@ -15,7 +15,7 @@ userRouter.route(['/:userid', '/:userid/:matchn'])
         else if (!req.params.matchn)
             var matchn = 10;
         else {
-            const error = ApiError.badRequest('Invalid Request. Format should be /:USER_ID or /:USER_ID/:NO_OF_MATCHES');
+            const error = ApiError.badRequest('Invalid Request. Format should be /USER_ID or /USER_ID/NO_OF_MATCHES');
             next(error);
             return;
         }
