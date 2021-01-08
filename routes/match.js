@@ -74,7 +74,7 @@ matchRouter.route('/:matchid')
                             "hero_healing": heal,
                             "gold": gold,
                             "gold_spent": goldSpent
-                        }
+                        };
                     });
                     var picksbans = [];
                     matchData.result.picks_bans.forEach((pb, i) => {
@@ -93,7 +93,7 @@ matchRouter.route('/:matchid')
                             "hero": heroDetail,
                             "team": team,
                             "order": order
-                        }
+                        };
                     });
                     var mode = details.gameMode(matchData.result.game_mode);
                     var lobby = details.lobbyType(matchData.result.lobby_type);
@@ -119,7 +119,7 @@ matchRouter.route('/:matchid')
                         "dire_tower": dTower,
                         "dire_barracks": dBarracks,
                         "picks_bans": picksbans
-                    }
+                    };
 
                     res.status(200).json(data);
                 });

@@ -31,15 +31,14 @@ Now go to [http://localhost:9000/user/851481689/1](http://localhost:9000/user/85
 
 ```json
 [
-    {
-        "matchid": "___",
-        "mode": "___",
-        "...": "___",
-        "duration": "___"
-    }
+  {
+    "matchid": "___",
+    "mode": "___",
+    "...": "___",
+    "duration": "___"
+  }
 ]
 ```
-
 
 ### GET Match History
 
@@ -58,3 +57,11 @@ GET    /match/MATCH_ID
 ```
 
 Returns data containing **list of players and their stats**, **match info**, **towers and barracks status** and **picks and bans**.
+
+## Update Heroes and Items
+
+If new heroes or items are added to game. Run this to update the lists.
+
+```sh
+npm run update
+```
