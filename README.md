@@ -60,8 +60,14 @@ Returns data containing **list of players and their stats**, **match info**, **t
 
 ## Update Heroes and Items
 
-If new heroes or items are added to game. Run this to update the lists.
+If new heroes or items are added to game, run this to update the lists.
 
 ```sh
 npm run update
 ```
+
+## Misc
+
+For **abandon**, "0" means player didn't abandon.
+For **towers** and **barracks**, "0" means it's destroyed.
+For **items** and **backpack items**, "0" means that slot is empty.
