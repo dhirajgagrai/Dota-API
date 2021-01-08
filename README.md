@@ -4,7 +4,7 @@ This an API for Dota 2, built over Steam Web API. This is a personal project and
 
 ## API Key
 
-Get a dev key from [here](http://steamcommunity.com/dev/apikey).
+Get a dev key from [here](http://steamcommunity.com/dev/apikey).\
 This is used for making calls to Steam Web API.
 
 ## Getting Started
@@ -47,7 +47,7 @@ GET    /user/USER_ID
 GET    /user/USER_ID/NO_OF_MATCHES
 ```
 
-Returns a list of matches.
+Returns a list of matches.\
 If NO_OF_MATCHES is not provided, it will return last 10 matches by default.
 
 ### GET Match Details
@@ -68,6 +68,6 @@ npm run update
 
 ## Misc
 
-For **abandon**, "0" means player didn't abandon.
-For **towers** and **barracks**, "0" means it's destroyed.
+For **abandon**, "0" means player didn't abandon.\
+For **towers** and **barracks**, "0" means it's destroyed.\
 For **items** and **backpack items**, "0" means that slot is empty.
